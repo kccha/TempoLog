@@ -2,7 +2,7 @@
 	"id": "tempolog",
 	"name": "TempoLog",
 	"version": "0.0.1",
-	"minAppVersion": "0.0.1",
+	"minAppVersion": "1.4.0",
 	"description": "Time logging tools for Obsidian.",
 	"isDesktopOnly": false
 }
