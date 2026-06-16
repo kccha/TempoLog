@@ -38,23 +38,39 @@ interface TimeTrackingFormData {
 	notes: string;
 }
 
-export function registerTrackTimeCommand(plugin: TempoLogPlugin): void {
+type TimeEntrySavedCallback = () => Promise<void> | void;
+
+export function registerTrackTimeCommand(
+	plugin: TempoLogPlugin,
+	onTimeEntrySaved?: TimeEntrySavedCallback,
+): void {
 	plugin.addCommand({
 		id: 'track-time',
 		name: 'Track time',
 		callback: async () => {
-			const categoryResult = await loadProjectCategories(
-				plugin.app,
-				plugin.settings.categoryFilePath,
-			);
-
-			if (categoryResult.error) {
-				new Notice(categoryResult.error);
-			}
-
-			new TrackTimeModal(plugin, categoryResult.activeCategories).open();
+			await openTrackTimeModal(plugin, onTimeEntrySaved);
 		},
 	});
+}
+
+export async function openTrackTimeModal(
+	plugin: TempoLogPlugin,
+	onTimeEntrySaved?: TimeEntrySavedCallback,
+): Promise<void> {
+	const categoryResult = await loadProjectCategories(
+		plugin.app,
+		plugin.settings.categoryFilePath,
+	);
+
+	if (categoryResult.error) {
+		new Notice(categoryResult.error);
+	}
+
+	new TrackTimeModal(
+		plugin,
+		categoryResult.activeCategories,
+		onTimeEntrySaved,
+	).open();
 }
 
 class TrackTimeModal extends Modal {
@@ -67,6 +83,7 @@ class TrackTimeModal extends Modal {
 	constructor(
 		private readonly plugin: TempoLogPlugin,
 		private readonly categories: string[],
+		private readonly onTimeEntrySaved?: TimeEntrySavedCallback,
 	) {
 		super(plugin.app);
 	}
@@ -284,6 +301,14 @@ class TrackTimeModal extends Modal {
 			});
 		} catch {
 			new Notice('Unable to save time entry.');
+			return;
+		}
+
+		try {
+			await this.onTimeEntrySaved?.();
+		} catch {
+			new Notice('Time entry saved. Refresh the dashboard to see it.');
+			this.close();
 			return;
 		}
 

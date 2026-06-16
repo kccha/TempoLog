@@ -6,13 +6,11 @@ const DEFAULT_LOG_FOLDER_PATH = 'TempoLog/Logs';
 export interface TempoLogSettings {
 	categoryFilePath: string;
 	logFolderPath: string;
-	mySetting: string;
 }
 
 export const DEFAULT_SETTINGS: TempoLogSettings = {
 	categoryFilePath: '',
 	logFolderPath: DEFAULT_LOG_FOLDER_PATH,
-	mySetting: 'default',
 };
 
 export class TempoLogSettingTab extends PluginSettingTab {
@@ -50,19 +48,6 @@ export class TempoLogSettingTab extends PluginSettingTab {
 					.setValue(this.plugin.settings.logFolderPath)
 					.onChange(async (value) => {
 						this.plugin.settings.logFolderPath = value.trim();
-						await this.plugin.saveSettings();
-					}),
-			);
-
-		new Setting(containerEl)
-			.setName('Settings #1')
-			.setDesc("It's a secret")
-			.addText((text) =>
-				text
-					.setPlaceholder('Enter your secret')
-					.setValue(this.plugin.settings.mySetting)
-					.onChange(async (value) => {
-						this.plugin.settings.mySetting = value;
 						await this.plugin.saveSettings();
 					}),
 			);

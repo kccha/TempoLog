@@ -1,8 +1,218 @@
-/*
+.tempolog-dashboard {
+	--tempolog-hour-height: 52px;
+	color: var(--text-normal);
+	padding: var(--size-4-3);
+}
 
-This CSS file will be included with your plugin, and
-available in the app when your plugin is enabled.
+.tempolog-dashboard__header {
+	background: var(--background-primary);
+	border-bottom: 1px solid var(--background-modifier-border);
+	padding-bottom: var(--size-4-3);
+	position: sticky;
+	top: 0;
+	z-index: 5;
+}
 
-If your plugin does not need CSS, delete this file.
+.tempolog-dashboard__title {
+	font-size: var(--font-ui-large);
+	line-height: var(--line-height-tight);
+	margin: 0 0 var(--size-4-2);
+}
 
-*/
+.tempolog-dashboard__controls {
+	align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	gap: var(--size-2-2);
+}
+
+.tempolog-dashboard__date-input {
+	min-width: 132px;
+}
+
+.tempolog-dashboard__body {
+	padding-top: var(--size-4-3);
+}
+
+.tempolog-dashboard__loading,
+.tempolog-dashboard__empty,
+.tempolog-dashboard__error {
+	background: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	color: var(--text-muted);
+	padding: var(--size-4-4);
+}
+
+.tempolog-dashboard__empty-title,
+.tempolog-dashboard__error-title {
+	color: var(--text-normal);
+	font-weight: var(--font-semibold);
+	margin-bottom: var(--size-2-1);
+}
+
+.tempolog-dashboard__empty-description,
+.tempolog-dashboard__error-description {
+	font-size: var(--font-ui-small);
+}
+
+.tempolog-dashboard__summary {
+	display: grid;
+	gap: var(--size-2-2);
+	grid-template-columns: repeat(auto-fit, minmax(86px, 1fr));
+	margin-bottom: var(--size-4-2);
+}
+
+.tempolog-dashboard__metric {
+	background: var(--background-secondary);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	min-width: 0;
+	padding: var(--size-4-2);
+}
+
+.tempolog-dashboard__metric-label {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+}
+
+.tempolog-dashboard__metric-value {
+	color: var(--text-normal);
+	font-size: var(--font-ui-small);
+	font-weight: var(--font-semibold);
+	overflow-wrap: anywhere;
+}
+
+.tempolog-dashboard__categories {
+	display: flex;
+	flex-direction: column;
+	gap: var(--size-2-1);
+	margin-bottom: var(--size-4-3);
+}
+
+.tempolog-dashboard__category-total {
+	align-items: center;
+	background: var(--background-secondary-alt);
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	display: flex;
+	gap: var(--size-2-2);
+	justify-content: space-between;
+	min-width: 0;
+	padding: var(--size-2-3) var(--size-4-2);
+}
+
+.tempolog-dashboard__category-name {
+	font-size: var(--font-ui-small);
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.tempolog-dashboard__category-duration {
+	color: var(--text-muted);
+	flex: 0 0 auto;
+	font-size: var(--font-ui-smaller);
+}
+
+.tempolog-dashboard__timeline {
+	display: grid;
+	gap: var(--size-2-3);
+	grid-template-columns: 48px minmax(0, 1fr);
+	margin-top: var(--size-4-3);
+}
+
+.tempolog-dashboard__hour-column,
+.tempolog-dashboard__time-grid {
+	height: calc(var(--tempolog-hour-height) * 24);
+	position: relative;
+}
+
+.tempolog-dashboard__hour-label {
+	color: var(--text-faint);
+	font-size: var(--font-ui-smaller);
+	line-height: 1;
+	position: absolute;
+	right: 0;
+	transform: translateY(-50%);
+	white-space: nowrap;
+}
+
+.tempolog-dashboard__time-grid {
+	background: var(--background-secondary-alt);
+	border-left: 1px solid var(--background-modifier-border);
+	border-radius: 6px;
+	overflow: hidden;
+}
+
+.tempolog-dashboard__hour-line {
+	border-top: 1px solid var(--background-modifier-border);
+	left: 0;
+	position: absolute;
+	right: 0;
+}
+
+.tempolog-dashboard__entry-layer {
+	inset: 0;
+	position: absolute;
+}
+
+.tempolog-dashboard__entry {
+	background: var(--background-primary);
+	border: 1px solid var(--background-modifier-border);
+	border-left: 3px solid var(--interactive-accent);
+	border-radius: 6px;
+	box-shadow: 0 1px 2px var(--background-modifier-box-shadow);
+	box-sizing: border-box;
+	min-height: 28px;
+	overflow: hidden;
+	padding: 3px 6px;
+	position: absolute;
+}
+
+.tempolog-dashboard__entry-time {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	line-height: 1.2;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.tempolog-dashboard__entry-task {
+	color: var(--text-normal);
+	font-size: var(--font-ui-small);
+	font-weight: var(--font-semibold);
+	line-height: 1.2;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.tempolog-dashboard__entry-category,
+.tempolog-dashboard__entry-notes {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	line-height: 1.25;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+@media (max-width: 420px) {
+	.tempolog-dashboard {
+		--tempolog-hour-height: 44px;
+		padding: var(--size-4-2);
+	}
+
+	.tempolog-dashboard__timeline {
+		grid-template-columns: 42px minmax(0, 1fr);
+	}
+
+	.tempolog-dashboard__date-input {
+		flex: 1 1 132px;
+	}
+}
